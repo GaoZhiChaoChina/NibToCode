@@ -18,7 +18,7 @@
  *  @param string 类名
  *  @param data   json数据
  */
-- (void)setName:(NSString *)string setJsonData:(id)data;
+- (void)setName:(NSString *)string setJsonData:(NSString *)data;
 
 /**
  *  保存图片到相册

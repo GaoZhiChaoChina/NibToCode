@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--生成Mode-->
+        <!--Auto Write Mode View Controller-->
         <scene sceneID="wcc-cl-A5N">
             <objects>
                 <viewController id="X72-9R-NXc" customClass="AutoWriteModeViewController" sceneMemberID="viewController">
@@ -44,7 +44,7 @@
                             <constraint firstItem="uEm-AO-rAb" firstAttribute="top" secondItem="NaF-BP-Txc" secondAttribute="bottom" constant="10" id="uMn-Tw-eya"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="生成Mode" id="uYR-Ou-hq1"/>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="uYR-Ou-hq1"/>
                     <connections>
                         <outlet property="_jsonString" destination="NaF-BP-Txc" id="YRy-cn-Hs8"/>
                         <outlet property="setModeBtn" destination="FrN-XI-kGV" id="jcw-Ux-KKe"/>
@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="1109" y="1038"/>
         </scene>
-        <!--Nib转代码-->
+        <!--GetSB View Controller-->
         <scene sceneID="Vm3-6V-P0e">
             <objects>
                 <viewController id="HXn-bb-tbC" customClass="GetSBViewController" sceneMemberID="viewController">
@@ -203,7 +203,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Nib转代码" id="bO9-fj-iqT"/>
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="bO9-fj-iqT"/>
                     <connections>
                         <outlet property="promoteLabel" destination="EdK-1E-HCc" id="NNL-Eo-QV4"/>
                         <outlet property="tableView" destination="aa1-Nh-gp2" id="SWM-WT-by9"/>

@@ -25,6 +25,8 @@ typedef NS_ENUM(NSUInteger, FileType) {
 + (NSString *)getFileNameNoPathComponentFromFilePath:(NSString *)filePath;
 /**在iOS手机里获取mac主机地址*/
 + (NSString *)getMacHomeDirectorInIOS;
+/**获取Documents地址*/
++ (NSString *)getDocumentsPath;
 /**获取上一层的文件路径*/
 + (NSString *)getUpLeverDirector:(NSString *)DirectorPath;
 /**获取上一层的文件路径*/

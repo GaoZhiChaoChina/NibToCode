@@ -109,12 +109,23 @@
     return [fileName stringByDeletingPathExtension];
 }
 + (NSString *)getMacHomeDirectorInIOS{
+    
+//    NSArray * paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
+//    NSString * desktopPath = [paths objectAtIndex:0];
+//    return desktopPath;
+    
     if ([NSHomeDirectory() rangeOfString:@"Library/Developer"].location!=NSNotFound) {
         NSString *path=[NSHomeDirectory() substringToIndex:[NSHomeDirectory() rangeOfString:@"Library/Developer"].location];
         return [path substringToIndex:path.length-1];
     }else{
         return @"";
     }
+}
++ (NSString *)getDocumentsPath
+{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                NSUserDomainMask, YES)
+            objectAtIndex:0];
 }
 + (NSString *)getUpLeverDirector:(NSString *)DirectorPath{
     NSString *director=[DirectorPath stringByDeletingLastPathComponent];

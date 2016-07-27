@@ -41,7 +41,6 @@
     
     [TabBarAndNavagation setRightBarButtonItemTitle:@"刷新" TintColor:[UIColor blackColor] target:self action:@selector(refreshSB_XIB)];
     [TabBarAndNavagation setTitleColor:[UIColor blackColor] forNavagationBar:self];
-//    self.navigationItem.title=@"SB XIB 生成Masonry";
    
     [self loadData];
 }
@@ -55,7 +54,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     });
-    
 }
 
 - (void)loadData{

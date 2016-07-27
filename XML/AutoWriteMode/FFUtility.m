@@ -15,6 +15,13 @@
 // 拼接属性字符串代码
 @property (nonatomic , strong)  NSMutableString *string_h ;
 @property (nonatomic , strong)  NSMutableString *string_m ;
+@property (nonatomic , strong)  NSMutableDictionary *subJsonDataDic;//二级字典
+@property (nonatomic , strong)  NSMutableArray *subJsonDataKeyDicArray;//二级字典key
+
+@property (nonatomic , strong)  NSMutableDictionary *subJsonDataKeyArrayDic;//二级数组
+@property (nonatomic , strong)  NSMutableArray *subJsonDataKeyArray;//二级数组字典
+@property (nonatomic , copy)  NSString *className;
+
 
 @end
 
@@ -31,19 +38,41 @@
     return sharedFFUtility;
 }
 
-- (void)setName:(NSString *)string setJsonData:(id)data{
+- (void)setName:(NSString *)string setJsonData:(NSString *)data{
     
+    self.className = string;
     
     _string_h = [[NSMutableString alloc]init];
     _string_m = [[NSMutableString alloc]init];
+    _subJsonDataDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+    _subJsonDataKeyArray = [NSMutableArray arrayWithCapacity:0];
+    
+    _subJsonDataKeyArrayDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+    _subJsonDataKeyArray = [NSMutableArray arrayWithCapacity:0];
     
     //.h文件默认处理
     [_string_h appendFormat:@"\n%@\n",@"#import <Foundation/Foundation.h>"];
-    NSString *str_h = [NSString stringWithFormat:@"@interface %@ : NSObject",string];
+    NSString *str_h = [NSString stringWithFormat:@"@interface %@ : NSObject",self.className];
     [_string_h appendFormat:@"\n%@\n",str_h];
-    
+   
     //数据处理
     [self yc_jsonValue:data];
+    
+    if (_subJsonDataDic) {
+        [_subJsonDataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key,NSDictionary *obj, BOOL * _Nonnull stop) {
+            
+            NSString *str_h = [NSString stringWithFormat:@"@interface %@Dic : NSObject",key];
+            [_string_h appendFormat:@"\n%@\n",str_h];
+          
+            [self setDic:obj isFirst:YES];
+            
+        }];
+    }
+
+   
+}
+
+- (void)writeDataModeToFile{
     
     
     NSString *basePath=[ZHFileManager getMacHomeDirectorInIOS];
@@ -53,14 +82,14 @@
         return;
     }
     
-    //获取文件路径
-//    NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-//                                                               NSUserDomainMask, YES) objectAtIndex:0];
+    //    获取文件路径
+    //    NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+    //                                                               NSUserDomainMask, YES) objectAtIndex:0];
     
     NSLog(@"提示===> 写入的沙盒的文件路径=:\n%@",basePath);
     
-//    h文件生成
-    NSString *path_h =[basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.h",string]];
+    //    h文件生成
+    NSString *path_h =[basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.h",self.className]];
     //创建数据缓冲
     NSMutableData *writer_h = [[NSMutableData alloc] init];
     
@@ -71,12 +100,12 @@
     [writer_h writeToFile:path_h atomically:YES];
     
     
-//    m文件生成
-    NSString *path_m =[basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m",string]];
+    //    m文件生成
+    NSString *path_m =[basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m",self.className]];
     
     NSMutableData *writer_m = [[NSMutableData alloc] init];
     
-    NSString *str_m = [NSString stringWithFormat:@"@implementation %@",string];
+    NSString *str_m = [NSString stringWithFormat:@"@implementation %@",@"niha"];
     [_string_m appendFormat:@"\n%@\n",str_m];
     
     [_string_m appendFormat:@"\n@end\n"];
@@ -84,7 +113,7 @@
     [writer_m appendData:[_string_m dataUsingEncoding:NSUTF8StringEncoding]];
     
     [writer_m writeToFile:path_m atomically:YES];
-    
+ 
 }
 
 
@@ -132,13 +161,39 @@
             type = @"NSString";
         }else if ([obj isKindOfClass:[NSArray class]]){
             type = @"NSArray";
-            [self setClassType:obj isFirst:isFirst];
+            
+               [obj enumerateObjectsUsingBlock:^(id  _Nonnull subObj, NSUInteger subIdx, BOOL * _Nonnull stop) {
+                   
+                   if (subIdx == 0) {
+                        [_subJsonDataKeyArrayDic setValue:subObj forKey:[NSString stringWithFormat:@"%lu",(unsigned long)subIdx]];
+                   }
+                  
+                   if ([subObj isKindOfClass:[NSDictionary class]]) {
+                       
+                       [subObj enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                         
+                           _subJsonDataKeyArrayDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+                           
+                     }];
+                       
+                   }else if([subObj isKindOfClass:[NSString class]]){
+                       
+                   }else{
+                       
+                   }
+                    
+                }];
             
         }else if ([obj isKindOfClass:[NSNumber class]]){
             type = @"NSInteger";
         }else if ([obj isKindOfClass:[NSDictionary class]]){
             type = @"NSDictionary";
-            [self setDic:obj isFirst:isFirst];
+            if (key) {
+                if (![_subJsonDataKeyDicArray containsObject:key]) {
+                    [_subJsonDataDic setValue:obj forKey:key];
+                }
+                [_subJsonDataKeyDicArray addObject:key];
+            }
             
         }else if ([obj isKindOfClass:NSClassFromString(@"__NSCFBoolean")]){
             type = @"BooL";
@@ -165,7 +220,12 @@
         }
         // 每生成属性字符串，就自动换行。
         [_string_h appendFormat:@"\n%@\n",str];
+        
     }];
+    
+    
+    [self writeDataModeToFile];
+    
 }
 #pragma Mark--  图片保存  文件写入，属性解析  end
 
@@ -177,7 +237,7 @@
     UIImageWriteToSavedPhotosAlbum(savedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 }
 
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
+- (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
 {
     NSString *msg = nil ;
     
