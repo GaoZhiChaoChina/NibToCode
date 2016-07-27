@@ -39,6 +39,7 @@
 		AB962C151D47A38100CDB91A /* Auto_Father.m in Sources */ = {isa = PBXBuildFile; fileRef = AB962C071D47A38100CDB91A /* Auto_Father.m */; };
 		AB962C161D47A38100CDB91A /* SIngleCategroy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB962C0D1D47A38100CDB91A /* SIngleCategroy.m */; };
 		AB962C171D47A38100CDB91A /* FatherClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AB962C0E1D47A38100CDB91A /* FatherClass.m */; };
+		ABD406531D4844B500EFCE60 /* AutoWriteModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD406521D4844B500EFCE60 /* AutoWriteModeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,8 @@
 		AB962C0C1D47A38100CDB91A /* FatherClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FatherClass.h; sourceTree = "<group>"; };
 		AB962C0D1D47A38100CDB91A /* SIngleCategroy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIngleCategroy.m; sourceTree = "<group>"; };
 		AB962C0E1D47A38100CDB91A /* FatherClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FatherClass.m; sourceTree = "<group>"; };
+		ABD406511D4844B500EFCE60 /* AutoWriteModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoWriteModeViewController.h; sourceTree = "<group>"; };
+		ABD406521D4844B500EFCE60 /* AutoWriteModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoWriteModeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +263,8 @@
 			children = (
 				AB962BDF1D4799E500CDB91A /* FFUtility.m */,
 				AB962BE01D4799E500CDB91A /* FFUtility.h */,
+				ABD406511D4844B500EFCE60 /* AutoWriteModeViewController.h */,
+				ABD406521D4844B500EFCE60 /* AutoWriteModeViewController.m */,
 			);
 			path = AutoWriteMode;
 			sourceTree = "<group>";
@@ -456,6 +461,7 @@
 				AB962C121D47A38100CDB91A /* ZHNSString.m in Sources */,
 				AB962BF51D47A37500CDB91A /* ZHStroyBoardFileManager.m in Sources */,
 				0476FF501D2E1F2600CD167C /* GetXIBTableViewCell.m in Sources */,
+				ABD406531D4844B500EFCE60 /* AutoWriteModeViewController.m in Sources */,
 				AB962BF41D47A37500CDB91A /* ZHStoryboardManager.m in Sources */,
 				AB962C141D47A38100CDB91A /* UIView+ZHView.m in Sources */,
 				0476FF4F1D2E1F2600CD167C /* GetSBTableViewCell.m in Sources */,
